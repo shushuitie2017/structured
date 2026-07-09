@@ -1,0 +1,12 @@
+# Data files must stay byte-identical to the SHA-256 checksums in
+# data/manifest.json, which are computed over LF line endings. Force LF on
+# checkout everywhere (including Windows) so `node scripts/validate.mjs` passes.
+*.json text eol=lf
+*.mjs  text eol=lf
+*.md   text eol=lf
+*.cff  text eol=lf
+*.txt  text eol=lf
+
+# Binary media — never transform.
+*.gif binary
+*.mp4 binary

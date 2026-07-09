@@ -4,6 +4,20 @@ All notable changes to the Marble Skill Taxonomy dataset are documented here.
 Dataset releases are versioned independently of the taxonomy `version` field
 (the underlying taxonomy is `v1`).
 
+## 中文文档版 · Chinese documentation edition — 2026-07-10
+
+A Chinese-language documentation edition of the dataset. **No data was changed.**
+
+- Added a fully translated Simplified-Chinese `README.md`, with a category glossary
+  (subjects / domains / topic types / dependency strengths) to help Chinese readers
+  navigate the English data.
+- Kept the original English README as `README.en.md`.
+- **All `data/*.json` files, `schema/`, `scripts/`, IDs and SHA-256 checksums are
+  unchanged** — `curriculum-standards.json` (third-party) is left verbatim.
+- Licensing and attribution are inherited unchanged from upstream: `LICENSE` (ODbL 1.0),
+  `LICENSE-CONTENT` (CC BY-SA 4.0), `PROVENANCE.md`, and `CITATION.cff` are byte-for-byte
+  identical to the original. Full credit remains with Marble / Generative Spark, Inc.
+
 ## [1.0.0] — 2026-07-08
 
 Initial public release.
