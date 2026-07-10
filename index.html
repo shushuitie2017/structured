@@ -307,15 +307,18 @@ function drawNode(n,ctx,scale){
   ctx.globalAlpha = on?1:.5; ctx.fill();
   if(n.id===selectedId){ ctx.lineWidth=1.6/scale; ctx.strokeStyle="#fff"; ctx.stroke(); }
   ctx.globalAlpha=1;
-  // 标签：放大到一定程度、或高亮/选中时才画，避免总览时糊成一团
-  const showLabel = (scale>2.2 && on) || n.id===selectedId || (active&&hlNodes.has(n.id)&&scale>1.1);
+  // 标签：仅在 hover/选中/高亮链 时显示（网格密集，一次性铺满会重叠糊成一片）
+  const showLabel = active && (hlNodes.has(n.id) || n.id===selectedId);
   if(showLabel){
     const label=nName(n);
-    const fs=Math.min(13, 11/scale*1.1 + 2);
+    const fs=Math.min(13, Math.max(9, 11/scale + 3));
     ctx.font=`${fs}px -apple-system,"PingFang SC","Microsoft YaHei",sans-serif`;
     ctx.textAlign="left"; ctx.textBaseline="middle";
-    ctx.fillStyle= on?"rgba(231,236,245,.96)":"rgba(160,170,190,.5)";
-    ctx.fillText(label, n.x+r+2, n.y);
+    // 文字描边，避免叠在圆点上看不清
+    ctx.lineWidth=3/scale; ctx.strokeStyle="rgba(7,11,22,.9)";
+    ctx.strokeText(label, n.x+r+3/scale, n.y);
+    ctx.fillStyle="rgba(233,238,247,.98)";
+    ctx.fillText(label, n.x+r+3/scale, n.y);
   }
 }
 function paintArea(n,color,ctx){ ctx.fillStyle=color; ctx.beginPath(); ctx.arc(n.x,n.y,radius(n)+3,0,2*Math.PI); ctx.fill(); }
