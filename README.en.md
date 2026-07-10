@@ -8,6 +8,8 @@ An open, structured taxonomy of **what children learn** across the primary/eleme
 
 ## See it
 
+> 🌐 **Live interactive demo (Chinese UI):** **[shushuitie2017.github.io/structured](https://shushuitie2017.github.io/structured/)** — a 3D learning graph: search, filter by subject/age, and click any node to trace its prerequisite chain and what it unlocks.
+
 ![The taxonomy as a rotating 3D graph: every dot a micro-topic, colored by subject, wired by prerequisites](media/curriculum-viz.gif)
 
 Every dot is a micro-topic, colored by subject; height is age; each thread is a prerequisite ([full-quality video](media/curriculum-viz.mp4)). Explore it interactively at [withmarble.com/curriculum](https://withmarble.com/curriculum) — tap any concept to trace everything a learner must master before it.

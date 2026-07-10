@@ -10,9 +10,11 @@
 
 ## 先看效果
 
+> 🌐 **在线交互 demo（中文界面）：** **[shushuitie2017.github.io/structured](https://shushuitie2017.github.io/structured/)** —— 3D 学习图谱，搜索定位、按学科显隐、按适龄过滤，点击任一节点查看它的先修链与解锁项。
+
 ![该分类体系呈现为一张旋转的 3D 图：每个点是一个微主题，按学科着色，用先修关系相连](media/curriculum-viz.gif)
 
-每个点是一个微主题，按学科着色；高度代表年龄；每条线是一条先修关系（[高清视频](media/curriculum-viz.mp4)）。可在 [withmarble.com/curriculum](https://withmarble.com/curriculum) 交互式探索——点击任一概念，即可追溯学习者在掌握它之前必须先学会的一切。
+每个点是一个微主题，按学科着色；高度代表年龄；每条线是一条先修关系（[高清视频](media/curriculum-viz.mp4)）。也可在官方站点 [withmarble.com/curriculum](https://withmarble.com/curriculum) 交互式探索——点击任一概念，即可追溯学习者在掌握它之前必须先学会的一切。
 
 
 ## 这是什么
