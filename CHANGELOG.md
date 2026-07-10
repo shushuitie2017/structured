@@ -4,6 +4,17 @@ All notable changes to the Marble Skill Taxonomy dataset are documented here.
 Dataset releases are versioned independently of the taxonomy `version` field
 (the underlying taxonomy is `v1`).
 
+## 交互式时间轴 demo + 中文内容层 · 2026-07-10
+
+- **重做 `index.html` 交互 demo**：改为**年龄时间轴**布局（横轴 4–15 岁，每个年龄一个网格块，
+  块高＝该年龄知识点数量），先修连线默认隐藏、点击/悬停节点才高亮其整条先修链与解锁项，
+  彻底改掉此前 3D 力导向图的杂乱。搜索、学科筛选、重置视图、详情面板一应俱全。
+- **新增中文内容层 `data/i18n/zh.json`**：把全部 1,590 个知识点的 name/description/evidence、
+  以及 3,218 条唯一先修理由译成简体中文，供 demo 优先显示（回退英文原文）。
+  原始 `data/*.json` **保持英文原文不变**（校验和不变）。
+- **许可**：`zh.json` 是对 Marble 所撰文本（CC BY-SA 4.0）的翻译，属衍生内容，
+  同样在 CC BY-SA 4.0 下发布并保留署名；第三方课标（`curriculum-standards.json`）未翻译、未改动。
+
 ## 中文文档版 · Chinese documentation edition — 2026-07-10
 
 A Chinese-language documentation edition of the dataset. **No data was changed.**

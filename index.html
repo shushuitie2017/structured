@@ -3,119 +3,94 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Marble 技能分类体系 · 交互式学习图谱</title>
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%23070b16'/%3E%3Ccircle cx='11' cy='12' r='4' fill='%2360a5fa'/%3E%3Ccircle cx='22' cy='10' r='3' fill='%2334d399'/%3E%3Ccircle cx='20' cy='22' r='3.5' fill='%23f472b6'/%3E%3Cpath d='M11 12L22 10M11 12l9 10' stroke='%238b98b0' stroke-width='1.2'/%3E%3C/svg%3E" />
-<meta name="description" content="1,590 个微主题、3,221 条先修关系的交互式 3D 学习图谱 —— 点击任一概念，追溯掌握它之前必须先学会的一切。" />
+<title>Marble 技能分类体系 · 儿童学习时间轴</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%23070b16'/%3E%3Ccircle cx='9' cy='16' r='3.5' fill='%2360a5fa'/%3E%3Ccircle cx='18' cy='11' r='3' fill='%2334d399'/%3E%3Ccircle cx='23' cy='21' r='3.5' fill='%23f472b6'/%3E%3Cpath d='M9 16L18 11M18 11l5 10' stroke='%238b98b0' stroke-width='1.2'/%3E%3C/svg%3E" />
+<meta name="description" content="按年龄（4–15 岁）排布的儿童学习时间轴：1,590 个知识点、3,221 条先修关系，点击任一知识点即可追溯它的整条先修链与后续解锁。" />
 <style>
   :root{
-    --bg:#070b16; --panel:rgba(14,20,34,.82); --panel-solid:#0d1424;
-    --border:rgba(255,255,255,.10); --txt:#e7ecf5; --muted:#8b98b0; --accent:#60a5fa;
+    --bg:#070b16; --panel:rgba(14,20,34,.86); --border:rgba(255,255,255,.10);
+    --txt:#e7ecf5; --muted:#8b98b0; --accent:#60a5fa;
   }
   *{box-sizing:border-box;margin:0;padding:0}
   html,body{height:100%;overflow:hidden}
-  body{
-    background:var(--bg);color:var(--txt);
+  body{background:var(--bg);color:var(--txt);
     font-family:-apple-system,"PingFang SC","Microsoft YaHei","Noto Sans SC",Segoe UI,system-ui,sans-serif;
-    -webkit-font-smoothing:antialiased;
-  }
+    -webkit-font-smoothing:antialiased}
   #graph{position:fixed;inset:0}
-  a{color:var(--accent);text-decoration:none}
-  a:hover{text-decoration:underline}
+  a{color:var(--accent);text-decoration:none} a:hover{text-decoration:underline}
 
-  /* 顶部标题条 */
-  #topbar{
-    position:fixed;top:0;left:0;right:0;z-index:20;
-    display:flex;align-items:center;gap:14px;padding:12px 18px;
-    background:linear-gradient(180deg,rgba(7,11,22,.92),rgba(7,11,22,0));
-    pointer-events:none;
-  }
+  #topbar{position:fixed;top:0;left:0;right:0;z-index:20;display:flex;align-items:center;gap:14px;
+    padding:12px 18px;background:linear-gradient(180deg,rgba(7,11,22,.94),rgba(7,11,22,0));pointer-events:none}
   #topbar h1{font-size:16px;font-weight:700;letter-spacing:.3px}
   #topbar .sub{font-size:12px;color:var(--muted)}
   #topbar .stat{margin-left:auto;font-size:12px;color:var(--muted);pointer-events:auto}
   #topbar .stat b{color:var(--txt)}
 
-  /* 左侧控制面板 */
-  #controls{
-    position:fixed;top:58px;left:14px;z-index:15;width:246px;
-    background:var(--panel);backdrop-filter:blur(10px);
-    border:1px solid var(--border);border-radius:14px;padding:14px;
-  }
+  #controls{position:fixed;top:58px;left:14px;z-index:15;width:230px;background:var(--panel);
+    backdrop-filter:blur(10px);border:1px solid var(--border);border-radius:14px;padding:14px}
   #controls .row{margin-bottom:12px}
+  #controls .row:last-child{margin-bottom:0}
   #controls label{display:block;font-size:11px;color:var(--muted);margin-bottom:6px;letter-spacing:.4px}
-  #search{
-    width:100%;padding:9px 11px;border-radius:9px;border:1px solid var(--border);
-    background:#0b1120;color:var(--txt);font-size:13px;font-family:inherit;
-  }
+  #search{width:100%;padding:9px 11px;border-radius:9px;border:1px solid var(--border);
+    background:#0b1120;color:var(--txt);font-size:13px;font-family:inherit}
   #search:focus{outline:none;border-color:var(--accent)}
-  .legend{display:flex;flex-direction:column;gap:5px}
-  .legend .chip{
-    display:flex;align-items:center;gap:8px;font-size:12.5px;cursor:pointer;
-    padding:4px 6px;border-radius:7px;user-select:none;transition:background .15s;
-  }
+  .legend{display:flex;flex-direction:column;gap:4px}
+  .legend .chip{display:flex;align-items:center;gap:8px;font-size:12.5px;cursor:pointer;
+    padding:3px 6px;border-radius:7px;user-select:none;transition:background .15s}
   .legend .chip:hover{background:rgba(255,255,255,.05)}
-  .legend .chip.off{opacity:.34}
+  .legend .chip.off{opacity:.32}
   .legend .dot{width:11px;height:11px;border-radius:50%;flex:none;box-shadow:0 0 6px currentColor}
   .legend .chip .n{margin-left:auto;color:var(--muted);font-variant-numeric:tabular-nums}
-  #ageWrap{display:flex;align-items:center;gap:8px}
-  #age{flex:1;accent-color:var(--accent)}
-  #ageVal{font-size:12px;color:var(--txt);font-variant-numeric:tabular-nums;min-width:44px;text-align:right}
-  .hint{font-size:11px;color:var(--muted);line-height:1.5}
+  .btn{width:100%;padding:8px;border-radius:9px;border:1px solid var(--border);background:#0b1120;
+    color:var(--txt);font-size:12.5px;font-family:inherit;cursor:pointer;transition:.15s}
+  .btn:hover{border-color:var(--accent);background:rgba(96,165,250,.12)}
+  .hint{font-size:11px;color:var(--muted);line-height:1.55}
 
-  /* 右侧详情抽屉 */
-  #detail{
-    position:fixed;top:58px;right:14px;bottom:52px;z-index:16;width:340px;
-    background:var(--panel);backdrop-filter:blur(10px);
-    border:1px solid var(--border);border-radius:14px;padding:0;
-    display:none;flex-direction:column;overflow:hidden;
-  }
+  #detail{position:fixed;top:58px;right:14px;bottom:52px;z-index:16;width:342px;background:var(--panel);
+    backdrop-filter:blur(10px);border:1px solid var(--border);border-radius:14px;
+    display:none;flex-direction:column;overflow:hidden}
   #detail.open{display:flex}
-  #detail .dhead{padding:16px 18px 12px;border-bottom:1px solid var(--border)}
-  #detail .dname{font-size:17px;font-weight:700;line-height:1.35}
-  #detail .dmeta{margin-top:8px;display:flex;flex-wrap:wrap;gap:6px}
-  #detail .tag{font-size:11px;padding:3px 8px;border-radius:20px;background:rgba(255,255,255,.07);color:var(--txt)}
+  #detail .dhead{padding:16px 18px 12px;border-bottom:1px solid var(--border);position:relative}
+  #detail .dname{font-size:17px;font-weight:700;line-height:1.35;padding-right:22px}
+  #detail .den{font-size:11.5px;color:var(--muted);margin-top:3px}
+  #detail .dmeta{margin-top:9px;display:flex;flex-wrap:wrap;gap:6px}
+  #detail .tag{font-size:11px;padding:3px 8px;border-radius:20px;background:rgba(255,255,255,.07)}
   #detail .tag.subj{color:#0a0e18;font-weight:600}
   #detail .dbody{padding:14px 18px;overflow-y:auto;flex:1}
-  #detail h3{font-size:11px;color:var(--muted);letter-spacing:.6px;margin:16px 0 7px;text-transform:uppercase}
+  #detail h3{font-size:11px;color:var(--muted);letter-spacing:.6px;margin:16px 0 7px}
   #detail h3:first-child{margin-top:0}
-  #detail .desc{font-size:13px;line-height:1.6;color:#d3dbea}
+  #detail .desc{font-size:13px;line-height:1.65;color:#d3dbea}
   #detail ul{list-style:none;display:flex;flex-direction:column;gap:6px}
   #detail .evi li{font-size:12.5px;line-height:1.5;color:#c6cfe0;padding-left:16px;position:relative}
   #detail .evi li::before{content:"✓";position:absolute;left:0;color:#34d399}
-  #detail .link-item{
-    font-size:12.5px;line-height:1.45;padding:7px 9px;border-radius:8px;
-    background:rgba(255,255,255,.04);border:1px solid var(--border);cursor:pointer;transition:.15s;
-  }
+  #detail .link-item{font-size:12.5px;line-height:1.45;padding:7px 9px;border-radius:8px;
+    background:rgba(255,255,255,.04);border:1px solid var(--border);cursor:pointer;transition:.15s}
   #detail .link-item:hover{background:rgba(96,165,250,.14);border-color:var(--accent)}
   #detail .link-item .lname{font-weight:600}
   #detail .link-item .lreason{color:var(--muted);font-size:11.5px;margin-top:2px}
-  #detail .strg{font-size:10px;padding:1px 6px;border-radius:10px;margin-right:6px;vertical-align:middle}
+  #detail .link-item .lage{color:var(--muted);font-size:11px;float:right;font-weight:400}
+  #detail .strg{font-size:10px;padding:1px 6px;border-radius:10px;margin-right:6px}
   #detail .strg.hard{background:rgba(248,113,113,.2);color:#fca5a5}
   #detail .strg.soft{background:rgba(96,165,250,.2);color:#93c5fd}
   #detail .empty{font-size:12px;color:var(--muted);font-style:italic}
-  #dclose{position:absolute;top:14px;right:14px;cursor:pointer;color:var(--muted);font-size:20px;line-height:1;z-index:2;pointer-events:auto}
+  #dclose{position:absolute;top:14px;right:16px;cursor:pointer;color:var(--muted);font-size:20px;line-height:1}
   #dclose:hover{color:var(--txt)}
 
-  /* 底部署名条（许可证要求署名） */
-  #credit{
-    position:fixed;bottom:0;left:0;right:0;z-index:14;padding:9px 18px;
-    font-size:11px;color:var(--muted);text-align:center;
-    background:linear-gradient(0deg,rgba(7,11,22,.92),rgba(7,11,22,0));pointer-events:none;
-  }
+  #credit{position:fixed;bottom:0;left:0;right:0;z-index:14;padding:9px 18px;font-size:11px;
+    color:var(--muted);text-align:center;background:linear-gradient(0deg,rgba(7,11,22,.94),rgba(7,11,22,0));pointer-events:none}
   #credit a{pointer-events:auto}
 
-  /* 加载遮罩 */
-  #loading{
-    position:fixed;inset:0;z-index:40;display:flex;flex-direction:column;
-    align-items:center;justify-content:center;gap:16px;background:var(--bg);
-  }
-  #loading .spinner{width:40px;height:40px;border:3px solid rgba(255,255,255,.12);border-top-color:var(--accent);border-radius:50%;animation:spin 1s linear infinite}
+  #loading{position:fixed;inset:0;z-index:40;display:flex;flex-direction:column;align-items:center;
+    justify-content:center;gap:16px;background:var(--bg)}
+  #loading .spinner{width:40px;height:40px;border:3px solid rgba(255,255,255,.12);border-top-color:var(--accent);
+    border-radius:50%;animation:spin 1s linear infinite}
   @keyframes spin{to{transform:rotate(360deg)}}
   #loading .ltxt{font-size:13px;color:var(--muted)}
   #err{color:#fca5a5;font-size:13px;max-width:360px;text-align:center;line-height:1.6;display:none}
 
   @media (max-width:720px){
-    #controls{width:200px;top:54px;left:8px;padding:11px}
-    #detail{width:auto;left:8px;right:8px;top:auto;bottom:44px;max-height:52vh}
+    #controls{width:174px;top:52px;left:8px;padding:10px}
+    #detail{width:auto;left:8px;right:8px;top:auto;bottom:44px;max-height:54vh}
     #topbar .sub{display:none}
   }
 </style>
@@ -125,15 +100,15 @@
 
   <div id="topbar">
     <div>
-      <h1>Marble 技能分类体系</h1>
-      <div class="sub">交互式学习图谱 · 每个点是一个微主题，高度代表适龄，连线是先修关系</div>
+      <h1>Marble 技能分类体系 · 儿童学习时间轴</h1>
+      <div class="sub">横轴＝适龄（4–15 岁）· 每个圆点是一个知识点，按学科着色 · 点击圆点追溯它的先修链与解锁</div>
     </div>
-    <div class="stat"><b id="nTopics">–</b> 微主题 · <b id="nEdges">–</b> 先修关系</div>
+    <div class="stat"><b id="nTopics">–</b> 知识点 · <b id="nEdges">–</b> 先修关系</div>
   </div>
 
   <div id="controls">
     <div class="row">
-      <label>搜索微主题</label>
+      <label>搜索知识点</label>
       <input id="search" type="text" placeholder="输入名称，回车定位…" autocomplete="off" />
     </div>
     <div class="row">
@@ -141,19 +116,18 @@
       <div class="legend" id="legend"></div>
     </div>
     <div class="row">
-      <label>适龄下限</label>
-      <div id="ageWrap">
-        <input id="age" type="range" min="4" max="15" value="4" step="1" />
-        <span id="ageVal">全部</span>
-      </div>
+      <button class="btn" id="reset">重置视图</button>
     </div>
-    <div class="hint">拖拽旋转 · 滚轮缩放 · 点击节点查看详情与先修链</div>
+    <div class="row">
+      <div class="hint">拖拽平移 · 滚轮缩放 · 悬停高亮邻接 · 点击查看详情与整条先修链</div>
+    </div>
   </div>
 
   <div id="detail">
-    <span id="dclose">×</span>
     <div class="dhead">
+      <span id="dclose">×</span>
       <div class="dname" id="dname"></div>
+      <div class="den" id="den"></div>
       <div class="dmeta" id="dmeta"></div>
     </div>
     <div class="dbody" id="dbody"></div>
@@ -167,28 +141,25 @@
 
   <div id="loading">
     <div class="spinner"></div>
-    <div class="ltxt" id="ltxt">正在加载学习图谱数据…</div>
+    <div class="ltxt" id="ltxt">正在加载学习时间轴数据…</div>
     <div id="err"></div>
   </div>
 
-<script src="https://cdn.jsdelivr.net/npm/3d-force-graph@1.73.4/dist/3d-force-graph.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/force-graph@1.43.5/dist/force-graph.min.js"></script>
 <script>
-// ===== 中文对照表（数据为英文，UI 用中文） =====
+// ===== 中文对照（UI 与类别） =====
 const SUBJECTS = {
-  "Science":                       {zh:"科学",           color:"#34d399"},
-  "Mathematics":                   {zh:"数学",           color:"#60a5fa"},
-  "English":                       {zh:"英语",           color:"#f472b6"},
-  "History":                       {zh:"历史",           color:"#fbbf24"},
-  "Personal & Social Development":  {zh:"个人与社会性发展", color:"#a78bfa"},
-  "Life Skills":                   {zh:"生活技能",        color:"#fb923c"},
-  "Computing":                     {zh:"计算",           color:"#22d3ee"},
-  "Learning to Learn":             {zh:"学会学习",        color:"#f87171"},
+  "Science":                      {zh:"科学",zhc:"#34d399",color:"#34d399"},
+  "Mathematics":                  {zh:"数学",color:"#60a5fa"},
+  "English":                      {zh:"英语",color:"#f472b6"},
+  "History":                      {zh:"历史",color:"#fbbf24"},
+  "Personal & Social Development": {zh:"个人与社会性发展",color:"#a78bfa"},
+  "Life Skills":                  {zh:"生活技能",color:"#fb923c"},
+  "Computing":                    {zh:"计算",color:"#22d3ee"},
+  "Learning to Learn":            {zh:"学会学习",color:"#f87171"},
 };
-const TYPES = {
-  CONCEPTUAL:"概念性", PROCEDURAL:"程序性", REPRESENTATIONAL:"表征性",
-  LANGUAGE:"语言性", META:"元认知",
-};
-const DOMAINS = {
+const TYPES={CONCEPTUAL:"概念性",PROCEDURAL:"程序性",REPRESENTATIONAL:"表征性",LANGUAGE:"语言性",META:"元认知"};
+const DOMAINS={
   "English Thinking":"英语思维","Grammar & Punctuation":"语法与标点","Handwriting & Transcription":"书写与誊抄",
   "Phonics & Word Reading":"自然拼读与单词认读","Reading Comprehension":"阅读理解","Speaking & Listening":"口语与听力",
   "Spelling & Word Study":"拼写与词汇研习","Vocabulary":"词汇","Writing Composition":"写作",
@@ -207,89 +178,84 @@ const DOMAINS = {
   "Empathy & Social Awareness":"共情与社会觉察","Friendship & Cooperation":"友谊与合作","Responsible Decision-Making":"负责任的决策",
   "Money & Finance":"金钱与理财","Entrepreneurship":"创业","Artificial Intelligence":"人工智能","Learning to Learn":"学会学习",
 };
-const zhSubj = s => (SUBJECTS[s]?.zh)||s;
-const zhDom  = d => DOMAINS[d]||d;
-const zhType = t => TYPES[t]||t;
+const zhSubj=s=>SUBJECTS[s]?.zh||s, zhDom=d=>DOMAINS[d]||d, zhType=t=>TYPES[t]||t;
 
-const $ = s => document.querySelector(s);
-const el = (t,c)=>{const e=document.createElement(t);if(c)e.className=c;return e;};
+const $=s=>document.querySelector(s), el=(t,c)=>{const e=document.createElement(t);if(c)e.className=c;return e;};
+const esc=s=>(s||"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
 
-let Graph, NODES=[], byId=new Map(), prereqOf=new Map(), unlockOf=new Map();
-const hiddenSubj = new Set();
-let ageMin = 4;
+// 布局常量
+const COLW=230, ROWH=13, AGE_MIN=4, AGE_MAX=15;
+const ageX=a=>(a-AGE_MIN)*COLW;
 
-function fail(msg){
-  $("#ltxt").style.display="none";
-  const e=$("#err"); e.style.display="block";
-  e.innerHTML = msg + "<br><br>若在本地打开，请通过 HTTP 服务器访问（不能用 file://）。";
-}
+let FG, NODES=[], LINKS=[], byId=new Map();
+const inLinks=new Map(), outLinks=new Map();   // id -> [link]
+const hiddenSubj=new Set();
+let I18N=null;                                  // 中文覆盖层
+let selectedId=null, hlNodes=new Set(), hlLinks=new Set();
+const colHeights={};                            // age -> 列高（用于坐标轴标注）
+
+// 取知识点显示用中文（回退英文）
+function nName(n){ return (I18N&&I18N.topics[n.id]?.name) || n.name; }
+function nDesc(n){ return (I18N&&I18N.topics[n.id]?.description) || n.desc; }
+function nEvi(n){ const z=I18N&&I18N.topics[n.id]?.evidence; return (z&&z.length)?z:n.evidence; }
+function lReason(l){ return (I18N&&I18N.reasons[l.reason]) || l.reason; }
+
+function fail(m){ $("#ltxt").style.display="none"; const e=$("#err"); e.style.display="block";
+  e.innerHTML=m+"<br><br>若在本地打开，请通过 HTTP 服务器访问（不能用 file://）。"; }
 
 async function boot(){
-  let topicsRaw, depsRaw;
+  let T,D;
   try{
-    const [tr, dr] = await Promise.all([
-      fetch("./data/topics.json"), fetch("./data/dependencies.json")
-    ]);
-    if(!tr.ok || !dr.ok) throw new Error("HTTP "+tr.status+"/"+dr.status);
-    topicsRaw = await tr.json();
-    depsRaw = await dr.json();
+    const [tr,dr]=await Promise.all([fetch("./data/topics.json"),fetch("./data/dependencies.json")]);
+    if(!tr.ok||!dr.ok) throw new Error("HTTP "+tr.status+"/"+dr.status);
+    T=(await tr.json()).topics; D=(await dr.json()).dependencies;
   }catch(e){ fail("数据加载失败："+e.message); return; }
+  // 中文覆盖层（可能尚未生成，失败则回退英文）
+  try{ const r=await fetch("./data/i18n/zh.json"); if(r.ok) I18N=await r.json(); }catch(e){}
 
-  const topics = topicsRaw.topics, deps = depsRaw.dependencies;
-  $("#nTopics").textContent = topics.length.toLocaleString();
-  $("#nEdges").textContent  = deps.length.toLocaleString();
+  $("#nTopics").textContent=T.length.toLocaleString();
+  $("#nEdges").textContent=D.length.toLocaleString();
 
-  // 构建节点 + 索引
-  const ageY = a => (9.5 - a) * 46;   // 年龄越小越靠上，形成分层
-  for(const t of topics){
-    const n = {
-      id:t.id, name:t.name, subject:t.subject, domain:t.domain, type:t.type,
-      a0:t.ageRangeStart, a1:t.ageRangeEnd, c:t.centrality||0,
-      desc:t.description, evidence:t.evidence||[],
-      fy: ageY(t.ageRangeStart),
-    };
-    NODES.push(n); byId.set(t.id, n);
+  // 建节点
+  for(const t of T){
+    const n={id:t.id,name:t.name,subject:t.subject,domain:t.domain,type:t.type,
+      a0:t.ageRangeStart,a1:t.ageRangeEnd,c:t.centrality||0,desc:t.description,evidence:t.evidence||[]};
+    NODES.push(n); byId.set(t.id,n);
   }
-  const LINKS = [];
-  for(const d of deps){
-    if(!byId.has(d.topicId) || !byId.has(d.prerequisiteId)) continue;
-    LINKS.push({source:d.prerequisiteId, target:d.topicId, strength:d.strength, reason:d.reason});
-    (prereqOf.get(d.topicId)||prereqOf.set(d.topicId,[]).get(d.topicId)).push(d);      // 该主题的先修
-    (unlockOf.get(d.prerequisiteId)||unlockOf.set(d.prerequisiteId,[]).get(d.prerequisiteId)).push(d); // 该主题解锁谁
+  // 确定性布局：每个年龄一个网格块（列内多子列平铺），按学科归组、再按中心度降序。
+  // 块越高＝该年龄知识点越多，像一排直方柱，分布一目了然。
+  const subjOrder=Object.keys(SUBJECTS);
+  const CELL=11, C=12;                       // 每个年龄块内 12 个子列
+  const cols={};
+  for(const n of NODES){ (cols[n.a0]=cols[n.a0]||[]).push(n); }
+  for(const a of Object.keys(cols)){
+    const arr=cols[a];
+    arr.sort((x,y)=> subjOrder.indexOf(x.subject)-subjOrder.indexOf(y.subject) || y.c-x.c);
+    const rows=Math.ceil(arr.length/C);
+    const H=(rows-1)*CELL; colHeights[a]=H;
+    arr.forEach((n,i)=>{
+      const col=i%C, row=Math.floor(i/C);
+      n.fx=n.x=ageX(+a)+(col-(C-1)/2)*CELL;
+      n.fy=n.y=row*CELL-H/2;
+    });
+  }
+  // 建边
+  for(const d of D){
+    if(!byId.has(d.topicId)||!byId.has(d.prerequisiteId)) continue;
+    const l={source:d.prerequisiteId,target:d.topicId,strength:d.strength,reason:d.reason};
+    LINKS.push(l);
+    (inLinks.get(d.topicId)||inLinks.set(d.topicId,[]).get(d.topicId)).push(l);
+    (outLinks.get(d.prerequisiteId)||outLinks.set(d.prerequisiteId,[]).get(d.prerequisiteId)).push(l);
   }
 
-  buildLegend(topics);
-
-  Graph = ForceGraph3D()($("#graph"))
-    .backgroundColor("#070b16")
-    .graphData({nodes:NODES, links:LINKS})
-    .nodeId("id")
-    .nodeVal(n => 1.6 + n.c*7)
-    .nodeColor(n => SUBJECTS[n.subject]?.color || "#9aa4b8")
-    .nodeLabel(n => `<div style="background:#0d1424;color:#e7ecf5;padding:5px 9px;border-radius:7px;border:1px solid rgba(255,255,255,.14);font-size:12px;max-width:240px">
-        <b>${esc(n.name)}</b><br><span style="color:#8b98b0">${zhSubj(n.subject)} · ${zhDom(n.domain)} · ${n.a0}–${n.a1}岁</span></div>`)
-    .nodeOpacity(0.92)
-    .linkColor(l => l.strength==="hard" ? "rgba(255,255,255,.30)" : "rgba(120,140,180,.14)")
-    .linkWidth(l => l.strength==="hard" ? 0.6 : 0.3)
-    .linkDirectionalParticles(0)
-    .onNodeClick(focusNode)
-    .onBackgroundClick(()=>closeDetail())
-    .warmupTicks(40)
-    .cooldownTicks(120);
-
-  Graph.d3Force("charge").strength(-24);
-
-  // 加大初始相机距离
-  Graph.cameraPosition({z: 620});
-
+  buildLegend(T);
+  initGraph();
   $("#loading").style.display="none";
-  wireControls();
+  wire();
 }
 
-function esc(s){return (s||"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));}
-
-function buildLegend(topics){
-  const counts={}; for(const t of topics) counts[t.subject]=(counts[t.subject]||0)+1;
+function buildLegend(T){
+  const counts={}; for(const t of T) counts[t.subject]=(counts[t.subject]||0)+1;
   const box=$("#legend");
   for(const s of Object.keys(SUBJECTS)){
     const chip=el("div","chip"); chip.dataset.subj=s;
@@ -297,91 +263,168 @@ function buildLegend(topics){
     const name=el("span"); name.textContent=SUBJECTS[s].zh;
     const n=el("span","n"); n.textContent=counts[s]||0;
     chip.append(dot,name,n);
-    chip.onclick=()=>{ chip.classList.toggle("off"); if(hiddenSubj.has(s))hiddenSubj.delete(s);else hiddenSubj.add(s); applyFilter(); };
+    chip.onclick=()=>{ chip.classList.toggle("off"); hiddenSubj.has(s)?hiddenSubj.delete(s):hiddenSubj.add(s); FG.nodeVisibility(nodeVis).linkVisibility(linkVis); };
     box.appendChild(chip);
   }
 }
 
-let ALL_LINKS=[];
-function visible(n){ return !hiddenSubj.has(n.subject) && n.a0>=ageMin; }
-function applyFilter(){
-  const vis=new Set();
-  const nodes=NODES.filter(n=>{const v=visible(n); if(v)vis.add(n.id); return v;});
-  Graph.graphData({nodes, links: ALL_LINKS.filter(l=>vis.has(l.source)&&vis.has(l.target)) });
+const nodeVis=n=>!hiddenSubj.has(n.subject);
+const linkVis=l=>hlLinks.has(l) && nodeVis(nd(l.source)) && nodeVis(nd(l.target));
+const nd=x=>typeof x==="object"?x:byId.get(x);
+
+function initGraph(){
+  FG=ForceGraph()($("#graph"))
+    .backgroundColor("#070b16")
+    .graphData({nodes:NODES,links:LINKS})
+    .nodeId("id")
+    .cooldownTicks(0)          // 坐标已固定，不跑力模拟
+    .warmupTicks(0)
+    .nodeVisibility(nodeVis)
+    .linkVisibility(linkVis)
+    .linkColor(l=>l.strength==="hard"?"rgba(248,180,180,.55)":"rgba(120,160,230,.4)")
+    .linkWidth(l=>l.strength==="hard"?1.4:0.9)
+    .linkDirectionalArrowLength(3.2).linkDirectionalArrowRelPos(1)
+    .onNodeClick(selectNode)
+    .onNodeHover(hoverNode)
+    .onBackgroundClick(clearSel)
+    .nodeCanvasObject(drawNode)
+    .nodePointerAreaPaint(paintArea)
+    .onRenderFramePost(drawAxis);
+
+  // 初次自适应视野
+  setTimeout(()=>FG.zoomToFit(400,90),120);
 }
 
-function wireControls(){
-  ALL_LINKS = Graph.graphData().links.map(l=>({
-    source: typeof l.source==="object"?l.source.id:l.source,
-    target: typeof l.target==="object"?l.target.id:l.target,
-    strength:l.strength, reason:l.reason
-  }));
+function radius(n){ return 1.7 + n.c*4; }
 
-  $("#age").oninput = e=>{
-    ageMin=+e.target.value;
-    $("#ageVal").textContent = ageMin<=4 ? "全部" : (ageMin+"岁+");
-    applyFilter();
-  };
-  const search=$("#search");
-  search.onkeydown=e=>{
-    if(e.key!=="Enter")return;
-    const q=search.value.trim().toLowerCase(); if(!q)return;
-    let hit=NODES.find(n=>n.name.toLowerCase()===q) || NODES.find(n=>n.name.toLowerCase().includes(q));
-    if(hit){ focusNode(hit); } else { search.style.borderColor="#f87171"; setTimeout(()=>search.style.borderColor="",800); }
-  };
-  $("#dclose").onclick=closeDetail;
+function drawNode(n,ctx,scale){
+  const active = selectedId!=null || hoverActive;
+  const on = !active || hlNodes.has(n.id);
+  const r=radius(n);
+  ctx.beginPath(); ctx.arc(n.x,n.y,r,0,2*Math.PI);
+  const col=SUBJECTS[n.subject]?.color||"#9aa4b8";
+  ctx.fillStyle = on?col:"rgba(120,130,150,.16)";
+  ctx.globalAlpha = on?1:.5; ctx.fill();
+  if(n.id===selectedId){ ctx.lineWidth=1.6/scale; ctx.strokeStyle="#fff"; ctx.stroke(); }
+  ctx.globalAlpha=1;
+  // 标签：放大到一定程度、或高亮/选中时才画，避免总览时糊成一团
+  const showLabel = (scale>2.2 && on) || n.id===selectedId || (active&&hlNodes.has(n.id)&&scale>1.1);
+  if(showLabel){
+    const label=nName(n);
+    const fs=Math.min(13, 11/scale*1.1 + 2);
+    ctx.font=`${fs}px -apple-system,"PingFang SC","Microsoft YaHei",sans-serif`;
+    ctx.textAlign="left"; ctx.textBaseline="middle";
+    ctx.fillStyle= on?"rgba(231,236,245,.96)":"rgba(160,170,190,.5)";
+    ctx.fillText(label, n.x+r+2, n.y);
+  }
+}
+function paintArea(n,color,ctx){ ctx.fillStyle=color; ctx.beginPath(); ctx.arc(n.x,n.y,radius(n)+3,0,2*Math.PI); ctx.fill(); }
+
+// 坐标轴：每个年龄块顶部“N岁”标注 + 短刻度
+function drawAxis(ctx,scale){
+  ctx.save();
+  ctx.textAlign="center"; ctx.textBaseline="alphabetic";
+  for(let a=AGE_MIN;a<=AGE_MAX;a++){
+    const x=ageX(a), top=-(colHeights[a]||0)/2;
+    const gap=14/scale;                       // 标签离方块顶部的距离（随缩放恒定）
+    ctx.font=`${13/scale}px -apple-system,"PingFang SC",sans-serif`;
+    ctx.fillStyle="rgba(190,204,230,.9)";
+    ctx.fillText(a+" 岁", x, top-gap-4/scale);
+    ctx.strokeStyle="rgba(255,255,255,.14)"; ctx.lineWidth=1/scale;
+    ctx.beginPath(); ctx.moveTo(x,top-gap); ctx.lineTo(x,top-gap+5/scale); ctx.stroke();
+  }
+  ctx.restore();
 }
 
-function focusNode(node){
-  // 相机对准
-  const dist=90, r=Math.hypot(node.x||0,node.y||0,node.z||0)||1;
-  const ratio=1+dist/r;
-  Graph.cameraPosition({x:(node.x||0)*ratio, y:(node.y||0)*ratio, z:(node.z||0)*ratio}, node, 900);
-  openDetail(node);
+// ===== 交互 =====
+function hoverNode(n){
+  if(selectedId!=null) return;            // 选中态优先
+  hlNodes=new Set(); hlLinks=new Set();
+  if(n){
+    hlNodes.add(n.id);
+    for(const l of (inLinks.get(n.id)||[])){ hlLinks.add(l); hlNodes.add(nd(l.source).id); }
+    for(const l of (outLinks.get(n.id)||[])){ hlLinks.add(l); hlNodes.add(nd(l.target).id); }
+    selectedId=null;
+  }
+  // 用临时高亮：selectedId 仍为空，drawNode 的 active 判据需兼顾 hover
+  hoverActive = !!n;
+  FG.linkVisibility(linkVis);
+  $("#graph").style.cursor=n?"pointer":"default";
 }
+let hoverActive=false;
+
+function selectNode(n){
+  selectedId=n.id; hoverActive=false;
+  hlNodes=new Set([n.id]); hlLinks=new Set();
+  // 上游：整条先修链（递归）
+  const up=[]; const seen=new Set([n.id]); const q=[n.id];
+  while(q.length){ const id=q.shift();
+    for(const l of (inLinks.get(id)||[])){ hlLinks.add(l); const p=nd(l.source).id;
+      if(!seen.has(p)){ seen.add(p); hlNodes.add(p); q.push(p); } } }
+  // 下游：直接解锁（1 层）
+  for(const l of (outLinks.get(n.id)||[])){ hlLinks.add(l); hlNodes.add(nd(l.target).id); }
+  FG.linkVisibility(linkVis);
+  FG.centerAt(n.x, n.y, 500); FG.zoom(Math.max(FG.zoom(),3), 500);
+  openDetail(n);
+}
+
+function clearSel(){ selectedId=null; hoverActive=false; hlNodes=new Set(); hlLinks=new Set();
+  FG.linkVisibility(linkVis); closeDetail(); }
 
 function openDetail(n){
-  $("#dname").textContent=n.name;
+  $("#dname").textContent=nName(n);
+  $("#den").textContent = (I18N&&I18N.topics[n.id]?.name)? n.name : "";  // 有中文时副标注英文原名
   const meta=$("#dmeta"); meta.innerHTML="";
-  const subjTag=el("span","tag subj"); subjTag.textContent=zhSubj(n.subject);
-  subjTag.style.background=SUBJECTS[n.subject]?.color||"#9aa4b8";
-  const domTag=el("span","tag"); domTag.textContent=zhDom(n.domain);
-  const typeTag=el("span","tag"); typeTag.textContent=zhType(n.type);
-  const ageTag=el("span","tag"); ageTag.textContent=n.a0+"–"+n.a1+" 岁";
-  meta.append(subjTag,domTag,typeTag,ageTag);
+  const st=el("span","tag subj"); st.textContent=zhSubj(n.subject); st.style.background=SUBJECTS[n.subject]?.color||"#9aa4b8";
+  const dt=el("span","tag"); dt.textContent=zhDom(n.domain);
+  const yt=el("span","tag"); yt.textContent=zhType(n.type);
+  const at=el("span","tag"); at.textContent=n.a0+"–"+n.a1+" 岁";
+  meta.append(st,dt,yt,at);
 
   const b=$("#dbody"); b.innerHTML="";
-  addSection(b,"描述",()=>{const p=el("p","desc");p.textContent=n.desc;return p;});
-  if(n.evidence.length) addSection(b,"掌握证据",()=>{
-    const ul=el("ul","evi"); for(const e of n.evidence){const li=el("li");li.textContent=e;ul.appendChild(li);} return ul;
-  });
-
-  const pre=(prereqOf.get(n.id)||[]);
-  addSection(b,`先修 · 学它之前先掌握（${pre.length}）`,()=> pre.length? linkList(pre,"prerequisiteId") : emptyEl("这是一个起点主题，无先修。"));
-
-  const unl=(unlockOf.get(n.id)||[]);
-  addSection(b,`解锁 · 掌握后可继续学（${unl.length}）`,()=> unl.length? linkList(unl,"topicId") : emptyEl("暂无后续解锁主题。"));
-
+  sect(b,"描述",()=>{const p=el("p","desc");p.textContent=nDesc(n);return p;});
+  const ev=nEvi(n);
+  if(ev&&ev.length) sect(b,"掌握证据",()=>{const ul=el("ul","evi");for(const e of ev){const li=el("li");li.textContent=e;ul.appendChild(li);}return ul;});
+  const pre=(inLinks.get(n.id)||[]);
+  sect(b,`先修 · 学它之前先掌握（${pre.length}）`,()=>pre.length?linkList(pre,"source"):emptyEl("这是一个起点知识点，无先修。"));
+  const unl=(outLinks.get(n.id)||[]);
+  sect(b,`解锁 · 掌握后可继续学（${unl.length}）`,()=>unl.length?linkList(unl,"target"):emptyEl("暂无后续解锁知识点。"));
   $("#detail").classList.add("open");
 }
-function addSection(parent,title,make){ const h=el("h3");h.textContent=title;parent.appendChild(h);parent.appendChild(make()); }
+function sect(p,t,mk){const h=el("h3");h.textContent=t;p.appendChild(h);p.appendChild(mk());}
 function emptyEl(t){const d=el("div","empty");d.textContent=t;return d;}
-function linkList(edges,idKey){
+function linkList(links,endKey){
   const ul=el("ul");
-  for(const e of edges){
-    const other=byId.get(e[idKey]); if(!other)continue;
+  for(const l of links){
+    const other=nd(l[endKey]); if(!other)continue;
     const li=el("li","link-item");
     const name=el("div","lname");
-    const s=el("span","strg "+(e.strength==="hard"?"hard":"soft")); s.textContent=e.strength==="hard"?"强":"弱";
-    name.append(s,document.createTextNode(other.name));
+    const s=el("span","strg "+(l.strength==="hard"?"hard":"soft")); s.textContent=l.strength==="hard"?"强":"弱";
+    const age=el("span","lage"); age.textContent=other.a0+"–"+other.a1+"岁";
+    name.append(s,document.createTextNode(nName(other)),age);
     li.appendChild(name);
-    if(e.reason){const r=el("div","lreason");r.textContent=e.reason;li.appendChild(r);}
-    li.onclick=()=>focusNode(other);
+    const rz=lReason(l); if(rz){const r=el("div","lreason");r.textContent=rz;li.appendChild(r);}
+    li.onclick=()=>selectNode(other);
     ul.appendChild(li);
   }
   return ul;
 }
 function closeDetail(){ $("#detail").classList.remove("open"); }
+
+function wire(){
+  const s=$("#search");
+  s.onkeydown=e=>{ if(e.key!=="Enter")return;
+    const q=s.value.trim().toLowerCase(); if(!q)return;
+    let hit=NODES.find(n=>nName(n).toLowerCase()===q)||NODES.find(n=>n.name.toLowerCase()===q)
+          ||NODES.find(n=>nName(n).toLowerCase().includes(q))||NODES.find(n=>n.name.toLowerCase().includes(q));
+    if(hit) selectNode(hit); else { s.style.borderColor="#f87171"; setTimeout(()=>s.style.borderColor="",800); }
+  };
+  $("#reset").onclick=()=>{ clearSel(); hiddenSubj.clear();
+    document.querySelectorAll("#legend .chip.off").forEach(c=>c.classList.remove("off"));
+    FG.nodeVisibility(nodeVis).linkVisibility(linkVis); FG.zoomToFit(500,90); };
+  $("#dclose").onclick=clearSel;
+  addEventListener("resize",()=>FG.width(innerWidth).height(innerHeight));
+}
 
 boot();
 </script>
