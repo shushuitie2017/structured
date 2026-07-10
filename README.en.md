@@ -1,129 +1,173 @@
-[简体中文](README.md) | **English**
+<div align="center">
 
-# Marble Skill Taxonomy
+# 🧭 Structured
 
-An open, structured taxonomy of **what children learn** across the primary/elementary years — decomposed into fine-grained "micro-topics", wired into a prerequisite graph, and aligned to national curriculum standards. Produced by [Marble](https://withmarble.com).
+<img src="assets/demo-timeline.png" alt="A learning timeline: 1,590 micro-topics arranged by age 4–15, colored by subject" width="820" />
 
-> **Version:** `v1` · **Topics:** 1,590 · **Prerequisite edges:** 3,221 · **Subjects:** 8
+> *「What a child should learn, what comes first, and what it unlocks — laid out as one connected map.」*
 
-## See it
+[![▶ Live Demo](https://img.shields.io/badge/▶_Live_Demo-Open-60a5fa?style=flat-square)](https://shushuitie2017.github.io/structured/)
+![Topics](https://img.shields.io/badge/topics-1,590-34d399?style=flat-square)
+![Prerequisites](https://img.shields.io/badge/prereqs-3,221-f472b6?style=flat-square)
+![Subjects](https://img.shields.io/badge/subjects-8-a78bfa?style=flat-square)
+![License](https://img.shields.io/badge/license-ODbL_1.0_·_CC_BY--SA_4.0-fbbf24?style=flat-square)
 
-> 🌐 **Live interactive demo (Chinese UI):** **[shushuitie2017.github.io/structured](https://shushuitie2017.github.io/structured/)** — a **learning timeline**: the x-axis is age (4–15), with all 1,590 micro-topics arranged into per-age blocks. Click any topic to highlight its full prerequisite chain and what it unlocks. Topic names, descriptions, evidence and prerequisite reasons are all translated into Simplified Chinese.
+**1,590 primary-school micro-topics laid out along a 4–15 age timeline — click any one to trace its full prerequisite chain and everything it unlocks. Chinese UI.**
 
-![The taxonomy as a rotating 3D graph: every dot a micro-topic, colored by subject, wired by prerequisites](media/curriculum-viz.gif)
+<sub>A connected graph of learning, not another flat list of standards.</sub>
 
-Every dot is a micro-topic, colored by subject; height is age; each thread is a prerequisite ([full-quality video](media/curriculum-viz.mp4)). Explore it interactively at [withmarble.com/curriculum](https://withmarble.com/curriculum) — tap any concept to trace everything a learner must master before it.
+[▶ Live Demo](#-live-demo) · [See it](#-see-it) · [Features](#-features) · [Use the data](#-use-the-data) · [Author](#-author)
 
+[简体中文](README.md) · English
 
-## What this is
+</div>
 
-Most curriculum data is either a flat list of standards or locked inside a product. This dataset is a **connected graph of learning**:
+---
 
-- **1,590 micro-topics** — a single, teachable idea (e.g. *"Building sentences"*, *"Apparent brightness of stars"*), each with a plain-language description, mastery **evidence** criteria, a type (conceptual / procedural / representational / language / meta), a subject + domain, and an approximate age range.
-- **3,221 prerequisite dependencies** — a directed acyclic graph: *"topic X depends on prerequisite Y"*, each edge tagged `hard`/`soft` and carrying a one-line **reason**.
-- **Curriculum alignment** — each micro-topic links to the standards it was distilled from (NGSS, Common Core, the UK National Curriculum, and more).
-- **Domain clusters** — 183 parent-friendly one-paragraph summaries per (subject, domain, age band).
+## ▶ Live Demo
 
-### Subjects
+### 👉 **<https://shushuitie2017.github.io/structured/>**
 
-| Subject | Topics |
-|---|---:|
-| Science | 547 |
-| Mathematics | 503 |
-| English | 286 |
-| History | 90 |
-| Personal & Social Development | 88 |
-| Life Skills | 37 |
-| Computing | 21 |
-| Learning to Learn | 18 |
+No install. Pan, zoom, hover to highlight, click to trace — see where any concept comes from and where it leads.
 
-## Files
+---
 
-All data lives in [`data/`](data/) as UTF-8 JSON. See [`schema/`](schema/) for JSON Schemas and [`manifest.json`](data/manifest.json) for counts + SHA-256 checksums.
+## 🎬 See it
 
-| File | What it holds |
-|---|---|
-| [`data/topics.json`](data/topics.json) | The micro-topics (graph **nodes**). |
-| [`data/dependencies.json`](data/dependencies.json) | Prerequisite **edges** (`topicId` depends on `prerequisiteId`). |
-| [`data/curriculum-standards.json`](data/curriculum-standards.json) | The source curriculum standards, grouped by curriculum. |
-| [`data/clusters.json`](data/clusters.json) | Parent-friendly domain summaries. |
-| [`data/manifest.json`](data/manifest.json) | Counts, per-subject breakdown, per-file checksums. |
+**The x-axis is age (4–15).** Each age is a grid block; taller block = more to learn at that age. Density peaks around 7–9 and tapers off — the shape of the primary-school curriculum at a glance.
 
-### A topic
+<div align="center">
+<img src="assets/demo-timeline.png" alt="Age-distributed timeline overview" width="780" />
+</div>
 
-```json
-{
-  "id": "mt_N8CpN1EJrP",
-  "type": "CONCEPTUAL",
-  "subject": "English",
-  "domain": "Grammar & Punctuation",
-  "name": "Building sentences",
-  "description": "Understand that words combine to make sentences — a sentence expresses a complete thought…",
-  "ageRangeStart": 4,
-  "ageRangeEnd": 6,
-  "centrality": 0.257,
-  "evidence": [
-    "Distinguish between complete sentences and fragments",
-    "Compose a complete sentence with a subject and verb"
-  ],
-  "assessmentPrompt": "If {{name}} says something like \"The dog\", can they tell you that's not a complete sentence…?",
-  "standards": ["ccss-ela:L.K.1f", "uk-nc-2013:Eng.App2.Y1.Sent.1"]
-}
-```
+**Click any topic to trace its full prerequisite chain.** Click "Building sentences" and it lights up the 15 topics it unlocks — a clear growth path fanning out to the right while everything else fades. Names, descriptions, evidence and reasons are all in Chinese (with the English original shown too).
 
-- `id` — stable identifier (`mt_…`), referenced by dependencies and by neighbours.
-- `standards` — keys into `curriculum-standards.json` (`"<curriculum-slug>:<code>"`).
-- `assessmentPrompt` — a natural-language check for the idea. Contains a `{{name}}` placeholder (the child's name); substitute or strip before display.
+<div align="center">
+<img src="assets/demo-trace.png" alt="Clicking a topic highlights its prerequisite chain and unlocks, with a Chinese detail panel" width="780" />
+</div>
 
-### A dependency
+> **Not "which topics exist," but "how they chain together."** That's what a DAG gives you that a list can't.
 
-```json
-{ "topicId": "mt__00ZSLnB7p", "prerequisiteId": "mt_VBl1T1sFCM", "strength": "hard",
-  "reason": "Must understand vibrations make sound before finding volume patterns" }
-```
+---
 
-`topicId` **depends on** `prerequisiteId`. Reverse the edge to get "unlocks".
+## ✨ Features
 
-## Using it
+| | Feature | What it does |
+|---|---|---|
+| 🗓️ | **Age timeline** | 1,590 topics arranged by age (4–15) into per-age blocks; density visible at a glance |
+| 🔗 | **Prerequisite tracing** | Click a topic to recursively highlight its full "must-learn-first" chain |
+| 🔓 | **Unlock preview** | See what a topic lets you learn next |
+| 🎨 | **Subject coloring** | 8 subjects, each a color; grouped within blocks |
+| 🔍 | **Search** | Type a name and hit Enter to locate |
+| 🈶 | **Full Chinese content** | Names / descriptions / evidence / reasons all in Simplified Chinese |
+| 📦 | **Pure, reusable data** | UTF-8 JSON, no runtime, no deps, with JSON Schemas + a validator |
 
-Pure data — no runtime, no dependencies. Load the JSON and go.
+---
+
+## 📊 What's inside
+
+| Subject | Topics | Subject | Topics |
+|---|---:|---|---:|
+| 🟢 Science | 547 | 🟡 History | 90 |
+| 🔵 Mathematics | 503 | 🟣 Personal & Social Dev. | 88 |
+| 🌸 English | 286 | 🟠 Life Skills | 37 |
+| 🔷 Computing | 21 | 🔴 Learning to Learn | 18 |
+
+- **1,590 micro-topics** — each a single teachable idea, with a plain-language description, mastery evidence, type, subject + domain, and an age range.
+- **3,221 prerequisite edges** — a DAG, each tagged `hard`/`soft` with a one-line reason.
+- **Curriculum-aligned** — each topic links to the standards it was distilled from (NGSS, Common Core, the UK National Curriculum, …).
+
+---
+
+## 🛠 Use the data
+
+Pure data — no runtime, no dependencies.
 
 ```js
 import topics from './data/topics.json' with { type: 'json' };
-import deps from './data/dependencies.json' with { type: 'json' };
+import deps   from './data/dependencies.json' with { type: 'json' };
+import zh     from './data/i18n/zh.json' with { type: 'json' };  // Chinese layer (optional)
 
 const byId = new Map(topics.topics.map(t => [t.id, t]));
 const prereqs = deps.dependencies
   .filter(d => d.topicId === 'mt_N8CpN1EJrP')
-  .map(d => byId.get(d.prerequisiteId).name);
+  .map(d => zh.topics[d.prerequisiteId]?.name ?? byId.get(d.prerequisiteId).name);
 ```
 
-Validate structure + referential integrity:
+Validate structure + referential integrity: `node scripts/validate.mjs`
 
-```bash
-node scripts/validate.mjs
-```
+| File | Holds |
+|---|---|
+| [`data/topics.json`](data/topics.json) | Micro-topics (graph nodes, English original) |
+| [`data/dependencies.json`](data/dependencies.json) | Prerequisite edges |
+| [`data/i18n/zh.json`](data/i18n/zh.json) | **Chinese content layer**: 1,590 topics + 3,218 reasons |
+| [`data/clusters.json`](data/clusters.json) | Parent-friendly domain summaries |
 
-## License
+---
 
-This dataset is **multi-licensed** — read this before you use or redistribute it.
+## ⚖️ Honest limits
+
+- **Starts at age 4** — the underlying data has no topics below 4, so the timeline starts there.
+- **Standards stay English** — `curriculum-standards.json` (third-party) is left verbatim, untranslated.
+- **Chinese is a translation** — content is translated from the English source; the detail panel also shows the English original for cross-checking.
+- **It describes a typical order, not the only truth** — prerequisites are a sensible teaching sequence, not a rule every child must follow.
+
+---
+
+## 👤 Author
+
+**BlueCat / 蓝猫** — an AI-native builder working on 3D, education and tooling, across Chinese / English / Japanese.
+
+<table>
+<tr>
+<td width="220" align="center">
+<img src="assets/wechat-qr.jpg" width="200" alt="WeChat QR" /><br/>
+<sub>👆 WeChat · chat / collab</sub>
+</td>
+<td>
+
+| | |
+|---|---|
+| 🐙 GitHub | **[@shushuitie2017](https://github.com/shushuitie2017)** |
+| 🧭 This project | [Structured](https://shushuitie2017.github.io/structured/) |
+| 💬 WeChat | scan the QR |
+
+</td>
+</tr>
+</table>
+
+### 🌟 Also building
+
+| Project | One-liner | Live |
+|---|---|---|
+| 🧒 **BlueCat learns Claude** | An interactive AI primer for kids | [learn.bluecatbot.com](https://learn.bluecatbot.com) |
+| 🔧 **HardwareLab** | 3D hardware-teardown teaching, 60fps | [hardware.bluecatbot.com](https://hardware.bluecatbot.com) |
+| ⌨️ **MODKEYS** | A 3D custom-keyboard configurator in the browser | [keyboard.bluecatbot.com](https://keyboard.bluecatbot.com) |
+| 🎨 **SVGSafe** | A clearly-licensed free SVG icon/illustration library | [svg.bluecatbot.com](https://svg.bluecatbot.com) |
+
+---
+
+## 📜 Data source & license
+
+This is a Chinese edition (docs + a full Chinese content layer + an interactive demo) of an **open dataset**. That dataset is **multi-licensed** — read before use or redistribution:
 
 | Layer | License |
 |---|---|
-| **The database** — the collection, structure, IDs, topic↔topic and topic↔standard relationships | [**ODbL 1.0**](LICENSE) — free for research **and** commercial use, **attribution** required, **share-alike** (derivative *databases* must stay open under ODbL). |
-| **The textual content Marble authored** — topic `description`/`name`/`evidence`/`assessmentPrompt`, dependency `reason`s, cluster `summary`s | [**CC BY-SA 4.0**](LICENSE-CONTENT) — same spirit: attribution + share-alike. |
-| **`curriculum-standards.json`** — extracted from third-party frameworks | **Not** Marble's to relicense. Each source is under **its own upstream license** — see [**PROVENANCE.md**](PROVENANCE.md). |
+| **The database** (collection, structure, IDs, topic↔topic / topic↔standard relations) | [**ODbL 1.0**](LICENSE) — research & commercial use, **attribution + share-alike** |
+| **Textual content** (name / description / evidence / reason / summary, incl. the Chinese translation) | [**CC BY-SA 4.0**](LICENSE-CONTENT) — attribution + share-alike |
+| **`curriculum-standards.json`** (third-party) | Each source's own upstream license — see [**PROVENANCE.md**](PROVENANCE.md); untranslated, unchanged |
 
-**Why share-alike + still commercial-friendly:** ODbL distinguishes a *derivative database* (extend/modify the taxonomy → must stay open) from a *produced work* (use it inside a product, model, or app → stays yours). So you can build a commercial product on this without open-sourcing your product; you only owe back improvements to the *taxonomy itself*.
+> **Attribution (required by ODbL / CC BY-SA — must be kept):**
+> Marble Skill Taxonomy (v1) · © Generative Spark, Inc. (Marble) · <https://withmarble.com> · licensed under ODbL 1.0 (database) and CC BY-SA 4.0 (content).
 
-### Attribution
+The Simplified-Chinese translation (`data/i18n/zh.json`) is a translation of the CC BY-SA content above, released under CC BY-SA 4.0 with attribution preserved. Formal citation: [CITATION.cff](CITATION.cff).
 
-Any use must credit:
+---
 
-> Marble Skill Taxonomy (v1) · © Generative Spark, Inc. (Marble) · https://withmarble.com · licensed under ODbL 1.0 (database) and CC BY-SA 4.0 (content).
+<div align="center">
 
-Plus the upstream notices in [PROVENANCE.md](PROVENANCE.md) for any curriculum standards you use. See [CITATION.cff](CITATION.cff) for a formal citation.
+*「Scattered topics, connected into one visible map.」*
 
-## What's *not* here
+**[▶ Open the timeline](https://shushuitie2017.github.io/structured/)**
 
-Deliberately excluded from this release: semantic embeddings (derived, recomputable) and any per-child / user data (never published). See [CHANGELOG.md](CHANGELOG.md).
+</div>

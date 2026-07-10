@@ -10,3 +10,5 @@
 # Binary media — never transform.
 *.gif binary
 *.mp4 binary
+*.png binary
+*.jpg binary

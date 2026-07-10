@@ -1,224 +1,222 @@
-**简体中文** | [English](README.en.md)
+<div align="center">
 
-# Marble 技能分类体系（中文文档版）
+# 🧭 结构化 · Structured
 
-一套开放、结构化的分类体系，刻画**孩子在小学阶段学些什么**——把知识拆解为细粒度的「微主题（micro-topic）」，串成一张先修关系图，并对齐各国课程标准。由 [Marble](https://withmarble.com) 制作。
+<img src="assets/demo-timeline.png" alt="儿童学习时间轴：1590 个知识点按 4–15 岁排成一排直方块，按学科着色" width="820" />
 
-> **版本：** `v1` · **主题数：** 1,590 · **先修关系边：** 3,221 · **学科：** 8
+> *「每个孩子该学什么、先学什么、学完又能解锁什么 —— 摊开成一张看得见的图。」*
 
-> **关于本仓库：** 这是 [os-taxonomy](https://github.com/withmarbleapp/os-taxonomy) 的**中文文档版**。`data/` 下的数据文件**保持英文原文不变**（结构、ID、校验和均与上游一致），仅将 README 文档与类别标签汉化，并附一份「类别对照表」帮助中文读者阅读英文数据。许可证与署名完全沿用上游（见下方 [许可证](#许可证)）。
+[![▶ 在线体验](https://img.shields.io/badge/▶_在线体验-Live-60a5fa?style=flat-square)](https://shushuitie2017.github.io/structured/)
+![知识点](https://img.shields.io/badge/知识点-1,590-34d399?style=flat-square)
+![先修关系](https://img.shields.io/badge/先修关系-3,221-f472b6?style=flat-square)
+![学科](https://img.shields.io/badge/学科-8-a78bfa?style=flat-square)
+![许可](https://img.shields.io/badge/许可-ODbL_1.0_·_CC_BY--SA_4.0-fbbf24?style=flat-square)
+![语言](https://img.shields.io/badge/UI-简体中文-fb923c?style=flat-square)
 
-## 先看效果
+**把 1,590 个小学知识点按 4–15 岁排成一条时间轴 —— 点任意一个，立刻看清它的整条先修链，和掌握后能解锁什么。全中文。**
 
-> 🌐 **在线交互 demo（全中文）：** **[shushuitie2017.github.io/structured](https://shushuitie2017.github.io/structured/)** —— **儿童学习时间轴**：横轴 4–15 岁，把 1,590 个知识点按适龄排布成一排"直方块"，点击任一知识点即可高亮它的整条先修链与后续解锁。知识点名称、描述、掌握证据、先修理由均已译成简体中文。
+<sub>一张连通的「学习之图」，不是又一份扁平的课标清单。</sub>
 
-![该分类体系呈现为一张旋转的 3D 图：每个点是一个微主题，按学科着色，用先修关系相连](media/curriculum-viz.gif)
+[▶ 在线体验](#-在线体验) · [看效果](#-看效果) · [它能做什么](#-它能做什么) · [类别对照](#-类别对照表) · [怎么用](#-怎么用数据) · [关于作者](#-关于作者)
 
-每个点是一个微主题，按学科着色；高度代表年龄；每条线是一条先修关系（[高清视频](media/curriculum-viz.mp4)）。也可在官方站点 [withmarble.com/curriculum](https://withmarble.com/curriculum) 交互式探索——点击任一概念，即可追溯学习者在掌握它之前必须先学会的一切。
+简体中文 · [English](README.en.md)
 
+</div>
 
-## 这是什么
+---
 
-大多数课程数据要么是一份扁平的标准清单，要么被锁在某个产品内部。而这份数据集是一张**互相连通的学习之图**：
+## ▶ 在线体验
 
-- **1,590 个微主题** —— 一个可教学的单一想法（例如 *「Building sentences（造句）」*、*「Apparent brightness of stars（恒星的视亮度）」*），每个都带有一段大白话描述、掌握程度的**证据（evidence）**判据、一个类型（概念性 / 程序性 / 表征性 / 语言性 / 元认知）、一个学科 + 领域（domain），以及一个大致的年龄区间。
-- **3,221 条先修依赖** —— 一张有向无环图：*「主题 X 依赖先修 Y」*，每条边标注 `hard`（强）/`soft`（弱），并附一句**理由（reason）**。
-- **课程对齐** —— 每个微主题都链接到它所提炼自的标准（NGSS、Common Core、英国国家课程等）。
-- **领域聚类（domain clusters）** —— 183 段面向家长、每段一小节、按（学科、领域、年龄段）划分的摘要。
+### 👉 **<https://shushuitie2017.github.io/structured/>**
 
-### 学科
+打开即用，无需安装。拖拽平移、滚轮缩放、悬停高亮、点击追溯 —— 一个知识点从哪来、到哪去，一目了然。
 
-| 学科 | 主题数 |
-|---|---:|
-| Science（科学） | 547 |
-| Mathematics（数学） | 503 |
-| English（英语） | 286 |
-| History（历史） | 90 |
-| Personal & Social Development（个人与社会性发展） | 88 |
-| Life Skills（生活技能） | 37 |
-| Computing（计算） | 21 |
-| Learning to Learn（学会学习） | 18 |
+---
 
-## 类别对照表
+## 🎬 看效果
 
-数据文件中的类别标签均为英文；下表提供中文对照，仅供阅读参考（数据本体不改动）。
+**横轴就是年龄（4–15 岁）。** 每个年龄一个网格块，块越高＝那个年龄要学的知识点越多。7 岁、9 岁最密，向两端递减 —— 一眼看清小学阶段的「知识密度曲线」。
 
-### 学科（subject）
+<div align="center">
+<img src="assets/demo-timeline.png" alt="按年龄分布的知识点时间轴总览" width="780" />
+</div>
 
-| 英文 | 中文 |
-|---|---|
-| Science | 科学 |
-| Mathematics | 数学 |
-| English | 英语 |
-| History | 历史 |
-| Personal & Social Development | 个人与社会性发展 |
-| Life Skills | 生活技能 |
-| Computing | 计算 |
-| Learning to Learn | 学会学习 |
+**点任意一个知识点，追溯它的整条先修链。** 比如点「造句」，画面立刻高亮出它向后**解锁**的 15 个知识点 —— 从「词与词之间空格」到「扩展名词短语」「多步问题解决」，一条清晰的成长路径向右铺开，其余全部淡出。名称、描述、掌握证据、先修理由，全是中文。
 
-### 领域（domain）
+<div align="center">
+<img src="assets/demo-trace.png" alt="点击“造句”高亮它的先修链与解锁项，右侧中文详情面板" width="780" />
+</div>
+
+> **不是「有哪些知识点」，而是「它们怎么一环扣一环」。** 这正是一张 DAG（有向无环图）能给你、而清单给不了的东西。
+
+---
+
+## ✨ 它能做什么
+
+| | 功能 | 说明 |
+|---|---|---|
+| 🗓️ | **年龄时间轴** | 1,590 个知识点按适龄（4–15 岁）排成直方块，分布密度一眼可见 |
+| 🔗 | **先修链追溯** | 点击任一知识点，递归高亮它「学之前必须先掌握」的整条链路 |
+| 🔓 | **解锁预览** | 反向看这个知识点掌握后能继续学什么 |
+| 🎨 | **学科分色** | 8 大学科各一色，块内按学科归组 |
+| 🔍 | **中文搜索** | 输入中文名回车即定位（如「分数」「造句」「力与运动」） |
+| 🈶 | **全中文内容** | 名称 / 描述 / 掌握证据 / 先修理由 全部简体中文，附英文原名 |
+| 📦 | **纯数据可复用** | UTF-8 JSON，无运行时无依赖，加载即用，带 JSON Schema 与校验器 |
+
+---
+
+## 📊 数据里有什么
+
+| 学科 | 知识点 | 学科 | 知识点 |
+|---|---:|---|---:|
+| 🟢 科学 | 547 | 🟡 历史 | 90 |
+| 🔵 数学 | 503 | 🟣 个人与社会性发展 | 88 |
+| 🌸 英语 | 286 | 🟠 生活技能 | 37 |
+| 🔷 计算 | 21 | 🔴 学会学习 | 18 |
+
+- **1,590 个微主题** —— 每个是一个可教学的单一想法，带大白话描述、掌握证据、类型、学科+领域、适龄区间。
+- **3,221 条先修依赖** —— 有向无环图，每条边标注 `hard`（强）/`soft`（弱）+ 一句理由。
+- **对齐各国课标** —— 每个知识点链接到它提炼自的标准（NGSS / Common Core / 英国国家课程等）。
+
+---
+
+## 🈶 类别对照表
+
+数据字段为英文；下表给中文对照（阅读辅助，数据本体不改动）。
+
+**8 大学科**：科学 Science · 数学 Mathematics · 英语 English · 历史 History · 个人与社会性发展 Personal & Social Development · 生活技能 Life Skills · 计算 Computing · 学会学习 Learning to Learn
+
+**5 种知识点类型**：概念性 CONCEPTUAL · 程序性 PROCEDURAL · 表征性 REPRESENTATIONAL · 语言性 LANGUAGE · 元认知 META
+**先修强度**：强先修 hard（不先掌握几乎学不会）· 弱先修 soft（先掌握有帮助但非必需）
+
+<details><summary>展开 ~55 个领域（domain）中英对照</summary>
 
 | 学科 | 英文领域 | 中文 |
 |---|---|---|
-| English | English Thinking | 英语思维 |
 | English | Grammar & Punctuation | 语法与标点 |
-| English | Handwriting & Transcription | 书写与誊抄 |
 | English | Phonics & Word Reading | 自然拼读与单词认读 |
 | English | Reading Comprehension | 阅读理解 |
-| English | Speaking & Listening | 口语与听力 |
-| English | Spelling & Word Study | 拼写与词汇研习 |
-| English | Vocabulary | 词汇 |
 | English | Writing Composition | 写作 |
 | Mathematics | Counting & Cardinality | 计数与基数 |
-| Mathematics | Number Representation & Place Value | 数的表示与位值 |
-| Mathematics | Addition & Subtraction | 加法与减法 |
-| Mathematics | Multiplication & Division | 乘法与除法 |
 | Mathematics | Fractions | 分数 |
-| Mathematics | Ratio & Proportion | 比与比例 |
-| Mathematics | Algebra | 代数 |
 | Mathematics | Geometry | 几何 |
-| Mathematics | Measurement | 测量 |
-| Mathematics | Data & Statistics | 数据与统计 |
-| Mathematics | Probability | 概率 |
-| Mathematics | Mathematical Thinking | 数学思维 |
+| Mathematics | Algebra | 代数 |
 | Science | Scientific Inquiry | 科学探究 |
-| Science | Organisms & Life Processes | 生物体与生命过程 |
-| Science | The Human Body | 人体 |
-| Science | Animals of the World | 世界动物 |
-| Science | Insects & Minibeasts | 昆虫与小生物 |
-| Science | Ocean Life | 海洋生物 |
-| Science | Ecosystems & Habitats | 生态系统与栖息地 |
-| Science | Rainforests | 雨林 |
-| Science | Polar Regions | 极地 |
-| Science | Dinosaurs & Paleontology | 恐龙与古生物学 |
-| Science | Matter & Materials | 物质与材料 |
 | Science | Forces & Motion | 力与运动 |
-| Science | Energy | 能量 |
-| Science | Waves, Light & Sound | 波、光与声 |
-| Science | Earth's Systems | 地球系统 |
-| Science | Weather & Climate | 天气与气候 |
-| Science | Volcanoes & Earthquakes | 火山与地震 |
-| Science | Space Systems & Earth's History | 太空系统与地球历史 |
+| Science | The Human Body | 人体 |
 | Science | Space Exploration | 太空探索 |
-| History | Historical Thinking | 历史思维 |
 | History | Ancient Egypt | 古埃及 |
-| History | Ancient Greece & Rome | 古希腊与古罗马 |
-| History | Medieval Times | 中世纪 |
-| Personal & Social Development | Self-Awareness | 自我觉察 |
-| Personal & Social Development | Self-Regulation & Resilience | 自我调节与韧性 |
 | Personal & Social Development | Emotional Literacy | 情绪素养 |
-| Personal & Social Development | Empathy & Social Awareness | 共情与社会觉察 |
-| Personal & Social Development | Friendship & Cooperation | 友谊与合作 |
-| Personal & Social Development | Responsible Decision-Making | 负责任的决策 |
 | Life Skills | Money & Finance | 金钱与理财 |
-| Life Skills | Entrepreneurship | 创业 |
 | Computing | Artificial Intelligence | 人工智能 |
-| Learning to Learn | Learning to Learn | 学会学习 |
 
-### 主题类型（type）
+完整对照见 demo 内的学科图例与详情面板。
 
-| 英文 | 中文 | 含义 |
-|---|---|---|
-| CONCEPTUAL | 概念性 | 理解一个概念、原理或关系 |
-| PROCEDURAL | 程序性 | 会执行一套步骤或方法 |
-| REPRESENTATIONAL | 表征性 | 会读写某种表示法（图、符号、记法等） |
-| LANGUAGE | 语言性 | 掌握某个术语或表达方式 |
-| META | 元认知 | 关于学习本身的策略与自我调控 |
+</details>
 
-### 先修强度（dependency strength）
+---
 
-| 英文 | 中文 | 含义 |
-|---|---|---|
-| hard | 强先修 | 不先掌握先修，几乎无法学会目标主题 |
-| soft | 弱先修 | 先掌握先修有帮助，但非绝对必需 |
+## 🛠 怎么用数据
 
-## 文件
-
-所有数据都放在 [`data/`](data/) 下，为 UTF-8 编码的 JSON。JSON Schema 见 [`schema/`](schema/)；数量统计与 SHA-256 校验和见 [`manifest.json`](data/manifest.json)。
-
-| 文件 | 内容 |
-|---|---|
-| [`data/topics.json`](data/topics.json) | 微主题（图的**节点**）。 |
-| [`data/dependencies.json`](data/dependencies.json) | 先修**边**（`topicId` 依赖 `prerequisiteId`）。 |
-| [`data/curriculum-standards.json`](data/curriculum-standards.json) | 来源课程标准，按课程分组。 |
-| [`data/clusters.json`](data/clusters.json) | 面向家长的领域摘要。 |
-| [`data/manifest.json`](data/manifest.json) | 数量统计、分学科明细、各文件校验和。 |
-
-### 一个主题（topic）长这样
-
-```json
-{
-  "id": "mt_N8CpN1EJrP",
-  "type": "CONCEPTUAL",
-  "subject": "English",
-  "domain": "Grammar & Punctuation",
-  "name": "Building sentences",
-  "description": "Understand that words combine to make sentences — a sentence expresses a complete thought…",
-  "ageRangeStart": 4,
-  "ageRangeEnd": 6,
-  "centrality": 0.257,
-  "evidence": [
-    "Distinguish between complete sentences and fragments",
-    "Compose a complete sentence with a subject and verb"
-  ],
-  "assessmentPrompt": "If {{name}} says something like \"The dog\", can they tell you that's not a complete sentence…?",
-  "standards": ["ccss-ela:L.K.1f", "uk-nc-2013:Eng.App2.Y1.Sent.1"]
-}
-```
-
-- `id` —— 稳定标识符（`mt_…`），被依赖关系和相邻节点引用。
-- `standards` —— `curriculum-standards.json` 中的键（`"<课程 slug>:<代码>"`）。
-- `assessmentPrompt` —— 针对该想法的自然语言检验话术。含一个 `{{name}}` 占位符（孩子的名字）；显示前请替换或删除。
-
-### 一条依赖（dependency）长这样
-
-```json
-{ "topicId": "mt__00ZSLnB7p", "prerequisiteId": "mt_VBl1T1sFCM", "strength": "hard",
-  "reason": "Must understand vibrations make sound before finding volume patterns" }
-```
-
-`topicId` **依赖** `prerequisiteId`。把边反过来，就得到「解锁（unlocks）」关系。
-
-## 怎么用
-
-纯数据——没有运行时、没有依赖。加载 JSON 即可开用。
+纯数据，无运行时、无依赖 —— 加载 JSON 即可。
 
 ```js
 import topics from './data/topics.json' with { type: 'json' };
-import deps from './data/dependencies.json' with { type: 'json' };
+import deps   from './data/dependencies.json' with { type: 'json' };
+import zh     from './data/i18n/zh.json' with { type: 'json' };  // 中文内容层（可选）
 
 const byId = new Map(topics.topics.map(t => [t.id, t]));
+// 「造句」的所有先修知识点（中文名）
 const prereqs = deps.dependencies
   .filter(d => d.topicId === 'mt_N8CpN1EJrP')
-  .map(d => byId.get(d.prerequisiteId).name);
+  .map(d => zh.topics[d.prerequisiteId]?.name ?? byId.get(d.prerequisiteId).name);
 ```
 
-校验结构与引用完整性：
+校验结构与引用完整性：`node scripts/validate.mjs`
 
-```bash
-node scripts/validate.mjs
-```
-
-## 许可证
-
-本数据集**采用多重许可**——使用或再分发前请务必先阅读本节。
-
-| 层 | 许可证 |
+| 文件 | 内容 |
 |---|---|
-| **数据库本身** —— 集合、结构、ID、主题↔主题与主题↔标准之间的关系 | [**ODbL 1.0**](LICENSE) —— 可免费用于研究**及**商业用途，**要求署名**，**相同方式共享**（衍生*数据库*必须在 ODbL 下保持开放）。 |
-| **Marble 撰写的文本内容** —— 主题的 `description`/`name`/`evidence`/`assessmentPrompt`、依赖的 `reason`、聚类的 `summary` | [**CC BY-SA 4.0**](LICENSE-CONTENT) —— 精神一致：署名 + 相同方式共享。 |
-| **`curriculum-standards.json`** —— 提取自第三方框架 | **并非** Marble 有权重新授权的内容。每个来源都受**其自身的上游许可**约束——见 [**PROVENANCE.md**](PROVENANCE.md)。 |
+| [`data/topics.json`](data/topics.json) | 微主题（图的节点，英文原文） |
+| [`data/dependencies.json`](data/dependencies.json) | 先修边（`topicId` 依赖 `prerequisiteId`） |
+| [`data/i18n/zh.json`](data/i18n/zh.json) | **中文内容层**：1,590 知识点 + 3,218 先修理由的简体中文 |
+| [`data/clusters.json`](data/clusters.json) | 家长向领域摘要 |
 
-**为什么既是相同方式共享、又对商用友好：** ODbL 区分*衍生数据库*（扩展/修改本分类体系 → 必须保持开放）与*产出作品*（把它用在某个产品、模型或应用里 → 仍归你所有）。因此你可以基于它构建商业产品而无需开源你的产品；你只需把对*分类体系本身*的改进回馈出来。
+---
 
-### 署名
+## 💡 背后的故事
 
-任何使用都必须注明：
+课程数据要么是一份读不动的扁平清单，要么锁在某个 App 里。可孩子的学习明明是**有先后、能连成网**的：会「造句」才谈得上「扩写句子」，懂「振动发声」才学得了「音量规律」。
 
-> Marble Skill Taxonomy (v1) · © Generative Spark, Inc. (Marble) · https://withmarble.com · licensed under ODbL 1.0 (database) and CC BY-SA 4.0 (content).
+于是有了这个 **Structured / 结构化** —— 把这些知识点摊平在一条 4–15 岁的时间轴上，再把「谁是谁的前提」一条条连起来，做成一张点开就能追溯的图，全中文。名字很直白：把散落的知识点，变得**结构化**。
 
-以及你所使用的任何课程标准在 [PROVENANCE.md](PROVENANCE.md) 中对应的上游声明。正式引用格式见 [CITATION.cff](CITATION.cff)。
+---
 
-## 本次*未*包含的内容
+## ⚖️ 诚实边界
 
-本次发布刻意排除：语义嵌入（embeddings，属派生数据、可重新计算）与任何按孩子/按用户的数据（从不公开）。详见 [CHANGELOG.md](CHANGELOG.md)。
+- **适龄从 4 岁起**：底层数据里没有 4 岁以下的知识点，所以时间轴从 4 岁开始（不是 1 岁）。
+- **课标原文是英文**：`curriculum-standards.json`（第三方官方标准）保持英文原样，未翻译（详见许可）。
+- **中文是译文**：知识点内容由英文原始数据集翻译而来，力求自然，但个别专有表述可能与你熟悉的说法略有出入 —— 详情面板同时给出英文原名，便于核对。
+- **它描述「典型顺序」，不是唯一真理**：先修关系是一种合理的教学次序参考，不代表每个孩子都必须严格照此。
+
+---
+
+## 👤 关于作者
+
+**蓝猫 · BlueCat** —— AI-native builder，做 3D、教育与工具类产品，作品覆盖中 / 英 / 日。
+
+<table>
+<tr>
+<td width="220" align="center">
+<img src="assets/wechat-qr.jpg" width="200" alt="微信联系二维码" /><br/>
+<sub>👆 微信 · 交流 / 合作</sub>
+</td>
+<td>
+
+| | |
+|---|---|
+| 🐙 GitHub | **[@shushuitie2017](https://github.com/shushuitie2017)** |
+| 🧭 本项目 | [结构化 · Structured](https://shushuitie2017.github.io/structured/) |
+| 💬 微信 | 扫左侧二维码 |
+
+想聊教育数据、3D 可视化、AI 产品，欢迎加微信。
+
+</td>
+</tr>
+</table>
+
+### 🌟 也在做
+
+| 项目 | 一句话 | 在线 |
+|---|---|---|
+| 🧒 **蓝猫学 Claude** | 给孩子的 AI 互动小课本 | [learn.bluecatbot.com](https://learn.bluecatbot.com) |
+| 🔧 **HardwareLab** | 3D 硬件拆解教学平台，60fps 程序化建模 | [hardware.bluecatbot.com](https://hardware.bluecatbot.com) |
+| ⌨️ **MODKEYS** | 浏览器里的 3D 客制化键盘配置器 | [keyboard.bluecatbot.com](https://keyboard.bluecatbot.com) |
+| 🎨 **矢安 SVGSafe** | 授权清晰的免费 SVG 图标 / 插画库 | [svg.bluecatbot.com](https://svg.bluecatbot.com) |
+| 📝 **vlog 三语博客** | 每日热点 + 经典书方法论，中英日 | [vlog.bluecatbot.com](https://vlog.bluecatbot.com) |
+
+---
+
+## 📜 数据来源与许可
+
+本项目是对一个**开放数据集**的中文版（文档汉化 + 全量中文内容层 + 交互式 demo）。底层数据集**采用多重许可**，使用或再分发前请阅读：
+
+| 层 | 许可 |
+|---|---|
+| **数据库**（集合、结构、ID、主题↔主题 / 主题↔标准的关系） | [**ODbL 1.0**](LICENSE) —— 研究与商用皆可，**要求署名 + 相同方式共享** |
+| **文本内容**（name / description / evidence / reason / summary，含其简体中文译文） | [**CC BY-SA 4.0**](LICENSE-CONTENT) —— 署名 + 相同方式共享 |
+| **`curriculum-standards.json`**（第三方课标） | 各上游自有许可，见 [**PROVENANCE.md**](PROVENANCE.md)，未翻译、未改动 |
+
+> **署名（ODbL / CC BY-SA 要求，必须保留）：**
+> Marble Skill Taxonomy (v1) · © Generative Spark, Inc. (Marble) · <https://withmarble.com> · licensed under ODbL 1.0 (database) and CC BY-SA 4.0 (content).
+
+简体中文译文（`data/i18n/zh.json`）为对上述 CC BY-SA 内容的翻译，同样在 CC BY-SA 4.0 下发布并保留署名。正式引用见 [CITATION.cff](CITATION.cff)，变更见 [CHANGELOG.md](CHANGELOG.md)。
+
+---
+
+<div align="center">
+
+*「散落的知识点，连成一张看得见的图。」*
+
+**[▶ 打开时间轴](https://shushuitie2017.github.io/structured/)**
+
+</div>
