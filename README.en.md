@@ -8,7 +8,7 @@ An open, structured taxonomy of **what children learn** across the primary/eleme
 
 ## See it
 
-> 🌐 **Live interactive demo (Chinese UI):** **[shushuitie2017.github.io/structured](https://shushuitie2017.github.io/structured/)** — a 3D learning graph: search, filter by subject/age, and click any node to trace its prerequisite chain and what it unlocks.
+> 🌐 **Live interactive demo (Chinese UI):** **[shushuitie2017.github.io/structured](https://shushuitie2017.github.io/structured/)** — a **learning timeline**: the x-axis is age (4–15), with all 1,590 micro-topics arranged into per-age blocks. Click any topic to highlight its full prerequisite chain and what it unlocks. Topic names, descriptions, evidence and prerequisite reasons are all translated into Simplified Chinese.
 
 ![The taxonomy as a rotating 3D graph: every dot a micro-topic, colored by subject, wired by prerequisites](media/curriculum-viz.gif)
 

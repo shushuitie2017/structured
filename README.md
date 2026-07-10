@@ -10,7 +10,7 @@
 
 ## 先看效果
 
-> 🌐 **在线交互 demo（中文界面）：** **[shushuitie2017.github.io/structured](https://shushuitie2017.github.io/structured/)** —— 3D 学习图谱，搜索定位、按学科显隐、按适龄过滤，点击任一节点查看它的先修链与解锁项。
+> 🌐 **在线交互 demo（全中文）：** **[shushuitie2017.github.io/structured](https://shushuitie2017.github.io/structured/)** —— **儿童学习时间轴**：横轴 4–15 岁，把 1,590 个知识点按适龄排布成一排"直方块"，点击任一知识点即可高亮它的整条先修链与后续解锁。知识点名称、描述、掌握证据、先修理由均已译成简体中文。
 
 ![该分类体系呈现为一张旋转的 3D 图：每个点是一个微主题，按学科着色，用先修关系相连](media/curriculum-viz.gif)
 
